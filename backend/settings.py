@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from datetime import timedelta
 from environs import Env
+import dj_database_url
 import os
 env = Env()
 env.read_env()
@@ -101,7 +102,8 @@ DATABASES = {
     }
 }
 
-
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -133,6 +135,13 @@ USE_I18N = True
 USE_TZ = True
 
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # SMTP server address
+EMAIL_PORT = 587  # Port for SMTP (587 for TLS, 465 for SSL)
+EMAIL_USE_TLS = True  # Use TLS (True for most servers)
+EMAIL_HOST_USER = 'khushakbatain@gmail.com'
+EMAIL_HOST_PASSWORD = 'dxex npru ejxb otlo'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
