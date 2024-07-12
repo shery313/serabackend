@@ -57,11 +57,12 @@ INSTALLED_APPS = [
     'anymail',
     'storages',
     'django_ckeditor_5',
-
+    "whitenoise.runserver_nostatic",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -325,3 +326,4 @@ JAZZMIN_UI_TWEAKS = {
         "success": "btn-success"
     }
 }
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
