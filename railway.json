@@ -1,0 +1,16 @@
+{
+    "build": {
+      "builder": "Nixpacks",
+      "nixpacks": {
+        "phases": {
+          "install": {
+            "commands": [
+              "apt-get update && apt-get install -y libpq-dev gcc python3-dev",
+              "pip install -r requirements.txt"
+            ]
+          }
+        }
+      }
+    }
+  }
+  
