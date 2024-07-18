@@ -31,7 +31,8 @@ SECRET_KEY = 'django-insecure-we2mbs@atn3srakd0ke!#(jvu(w-y*mg*qck7e0kgr+#qont$3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sera-backend.up.railway.app']
+ALLOWED_HOSTS = ['sera-backend.up.railway.app','127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://sera-backend.up.railway.app']
 
 
 # Application definition
