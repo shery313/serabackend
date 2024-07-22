@@ -166,7 +166,7 @@ class PostDetailAPIView(generics.RetrieveAPIView):
 
     def get_object(self):
         slug = self.kwargs['slug']
-        post = api_models.Post.objects.get(slug=slug, status="Active")
+        post = api_models.Post.objects.get(slug=slug)
         post.view += 1
         post.save()
         return post
