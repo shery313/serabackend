@@ -242,9 +242,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # Custom Admin Settings
 JAZZMIN_SETTINGS = {
-    "site_title": "Sheryar",
-    "site_header": "Sheryar",
-    "site_brand": "Modern Marketplace ",
+    "site_title": "Sera Innovations",
+    "site_header": "Sera Innovations",
+    "site_brand": "Modern Blog ",
     # "site_icon": "images/favicon.ico",
     # "site_logo": "images/logos/logo.jpg",
     "welcome_sign": "Welcome To Sheryar",
