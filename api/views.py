@@ -142,7 +142,7 @@ class PostCategoryListAPIView(generics.ListAPIView):
     def get_queryset(self):
         category_slug = self.kwargs['category_slug'] 
         category = api_models.Category.objects.get(slug=category_slug)
-        return api_models.Post.objects.filter(category=category, status="Active")
+        return api_models.Post.objects.filter(category=category)
 
 class PostListAPIView(generics.ListAPIView):
     serializer_class = api_serializer.PostSerializer
