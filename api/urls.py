@@ -20,6 +20,7 @@ urlpatterns = [
     path('post/comment-post/', api_views.PostCommentAPIView.as_view()),
     path('post/bookmark-post/', api_views.BookmarkPostAPIView.as_view()),
     path('search/', api_views.PostSearchApiView.as_view()),
+    path('contact',api_views.ContactSerializer.as_view()),
 
     # Dashboard APIS
     path('author/dashboard/stats/<user_id>/', api_views.DashboardStats.as_view()),

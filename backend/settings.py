@@ -277,6 +277,7 @@ JAZZMIN_SETTINGS = {
         "api.Comment":"fas fa-envelope",
         "api.Notification":"fas fa-bell",
         "api.Bookmark":"fas fa-heart",
+        "api.Contact":"fas fa-phone"
 
         
     },

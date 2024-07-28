@@ -193,3 +193,8 @@ class AuthorStats(serializers.Serializer):
     posts = serializers.IntegerField(default=0)
     likes = serializers.IntegerField(default=0)
     bookmarks = serializers.IntegerField(default=0)
+
+class ContactSerializer(serializers.Serializer):
+    class Meta:
+        model=api_models.Contact
+        fields='__all__'

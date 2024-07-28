@@ -20,6 +20,8 @@ class CommentAdmin(admin.ModelAdmin):
 
 class BookmarkAdmin(admin.ModelAdmin):
     list_display = ["user","post"]
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ["name","subject"]
 
 class NotificationAdmin(admin.ModelAdmin):
     list_display = ["user","post","type","seen",]
@@ -31,3 +33,4 @@ admin.site.register(api_models.Post, PostAdmin)
 admin.site.register(api_models.Comment, CommentAdmin)
 admin.site.register(api_models.Notification, NotificationAdmin)
 admin.site.register(api_models.Bookmark, BookmarkAdmin)
+admin.site.register(api_models.Contact,ContactAdmin )

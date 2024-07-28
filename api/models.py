@@ -164,3 +164,12 @@ class Notification(models.Model):
             return f"{self.type} - {self.post.title}"
         else:
             return "Notification"
+class Contact(models.Model):
+    name=models.CharField(max_length=50,null=True,blank=True)
+    email=models.EmailField(max_length=50,null=True,blank=True)
+    subject=models.CharField(max_length=100,null=True,blank=True)
+    message=models.TextField(null=True,blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.subject} from {self.name}'

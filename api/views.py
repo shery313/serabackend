@@ -462,3 +462,19 @@ class DashboardPostEditAPIView(generics.RetrieveUpdateDestroyAPIView):
     "category_id": 1,
     "post_status": "Active"
 }
+class ContactSerializer(generics.CreateAPIView):
+    serializer_class=api_serializer.ContactSerializer
+    queryset=api_models.Contact.objects.all()
+    permission_classes=[AllowAny]
+    def create(self,request):
+        name=request.data.get('name')
+        email=request.data.get('email')
+        subject=request.data.get('subject')
+        message=request.data.get('message')
+        new_contact=api_models.Contact.objects.create(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message)
+        
+        return Response(status=status.HTTP_201_CREATED)
