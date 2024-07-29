@@ -16,6 +16,7 @@ from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.tokens import default_token_generator
 
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
@@ -34,6 +35,15 @@ from api import models as api_models
 class MyTokenObtainPairView(TokenObtainPairView):
     # Here, it specifies the serializer class to be used with this view.
     serializer_class = api_serializer.MyTokenObtainPairSerializer
+    def post(self,request,*args, **kwargs):
+        normalize_email=request.data.get('email').lower()
+        request.data['email']=normalize_email
+        return super().post(self,request,*args, **kwargs)
+
+def get_numeric_otp(length=7):
+    otp=''.join([str(random.randint(0,9)) for _ in range(length)])
+    return otp
+    
 
 # This code defines another DRF View class called RegisterView, which inherits from generics.CreateAPIView.
 class RegisterView(generics.CreateAPIView):
@@ -44,8 +54,53 @@ class RegisterView(generics.CreateAPIView):
     # It sets the serializer class to be used with this view.
     serializer_class = api_serializer.RegisterSerializer
 
+    def perform_create(self,serializer):
+        normalizer_email=serializer.validated_data.get('email').lower()
+        user=serializer.save(email=normalizer_email)
+        user.is_active=False
+        user.otp=generate_numeric_otp()
+        uidb64=user.pk
+        token=default_token_generator.make_token(user)
+        user.reset_token=token
+        user.save
+        link = f"https://vivifystore.netlify.app/verify-email?uidb64={uidb64}&token={token}&otp={user.otp}"
+        merge_data = {'link': link, 'username': user.username}
+        subject = "Email Verification"
+        text_body = render_to_string("email/verification_email.txt", merge_data)
+        html_body = render_to_string("email/verification_email.html", merge_data)
+
+        msg = EmailMultiAlternatives(subject, text_body, settings.EMAIL_HOST, [user.email])
+        msg.attach_alternative(html_body, "text/html")
+        msg.send()
 
 # This code defines another DRF View class called ProfileView, which inherits from generics.RetrieveAPIView and used to show user profile view.
+class VerifyEmail(generics.CreateAPIView):
+    permission_classes=[AllowAny,]
+    serializer_class=api_serializer.UserSerializer
+    
+    def create(self,request,*args, **kwargs):
+
+        try:
+            uidb64 = request.data.get('uidb64')
+            token = request.data.get('token')
+            otp = request.data.get('otp')
+            print(uidb64,token,otp)
+            user = api_models.User.objects.get(pk=uidb64,otp=otp,reset_token=token)
+            print(user)
+            
+
+            if user:
+                user.is_active = True
+                user.email_verified = True
+                user.otp = ""
+                user.reset_token=""
+                user.save()
+                return Response({'message': 'Email verified successfully'}, status=status.HTTP_200_OK)
+            else:
+                return Response({'error': 'Invalid token or OTP'}, status=status.HTTP_400_BAD_REQUEST)
+        except (TypeError, ValueError, OverflowError, api_models.User.DoesNotExist) as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 class ProfileView(generics.RetrieveUpdateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = api_serializer.ProfileSerializer
@@ -94,7 +149,7 @@ class PasswordEmailVerify(generics.RetrieveAPIView):
             html_body = render_to_string("email/password_reset.html", merge_data)
             
             msg = EmailMultiAlternatives(
-                subject=subject, from_email=settings.FROM_EMAIL,
+                subject=subject, from_email=settings.EMAIL_HOST,
                 to=[user.email], body=text_body
             )
             msg.attach_alternative(html_body, "text/html")
