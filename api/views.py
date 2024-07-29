@@ -36,7 +36,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
     # Here, it specifies the serializer class to be used with this view.
     serializer_class = api_serializer.MyTokenObtainPairSerializer
     def post(self,request,*args, **kwargs):
-        normalize_email=request.data.get('email').lower()
+        normalize_email=request.data.get('email','').lower()
         request.data['email']=normalize_email
         return super().post(self,request,*args, **kwargs)
 
@@ -55,7 +55,7 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = api_serializer.RegisterSerializer
 
     def perform_create(self,serializer):
-        normalizer_email=serializer.validated_data.get('email').lower()
+        normalizer_email=serializer.validated_data.get('email','').lower()
         user=serializer.save(email=normalizer_email)
         user.is_active=False
         user.otp=generate_numeric_otp()
