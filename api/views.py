@@ -35,10 +35,11 @@ from api import models as api_models
 class MyTokenObtainPairView(TokenObtainPairView):
     # Here, it specifies the serializer class to be used with this view.
     serializer_class = api_serializer.MyTokenObtainPairSerializer
-    def post(self,request,*args, **kwargs):
-        normalize_email=request.data.get('email','').lower()
-        request.data['email']=normalize_email
-        return super().post(self,request,*args, **kwargs)
+    def post(self, request, *args, **kwargs):
+        # Normalize email before processing login
+        normalized_email = request.data.get('email', '').lower()
+        request.data['email'] = normalized_email
+        return super().post(request, *args, **kwargs)
 
 def get_numeric_otp(length=7):
     otp=''.join([str(random.randint(0,9)) for _ in range(length)])
@@ -62,8 +63,8 @@ class RegisterView(generics.CreateAPIView):
         uidb64=user.pk
         token=default_token_generator.make_token(user)
         user.reset_token=token
-        user.save
-        link = f"https://vivifystore.netlify.app/verify-email?uidb64={uidb64}&token={token}&otp={user.otp}"
+        user.save()
+        link = f"https://serainnovations.pro/verify-email?uidb64={uidb64}&token={token}&otp={user.otp}"
         merge_data = {'link': link, 'username': user.username}
         subject = "Email Verification"
         text_body = render_to_string("email/verification_email.txt", merge_data)
@@ -76,7 +77,7 @@ class RegisterView(generics.CreateAPIView):
 # This code defines another DRF View class called ProfileView, which inherits from generics.RetrieveAPIView and used to show user profile view.
 class VerifyEmail(generics.CreateAPIView):
     permission_classes=[AllowAny,]
-    serializer_class=api_serializer.UserSerializer
+    serializer_class=api_serializer.RegisterSerializer
     
     def create(self,request,*args, **kwargs):
 
