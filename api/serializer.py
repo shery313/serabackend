@@ -127,21 +127,39 @@ class CategorySerializer(serializers.ModelSerializer):
         else:
             self.Meta.depth = 3
 
-class CommentSerializer(serializers.ModelSerializer):
+# class CommentSerializer(serializers.ModelSerializer):
     
+#     class Meta:
+#         model = api_models.Comment
+#         fields = "__all__"
+
+#     def __init__(self, *args, **kwargs):
+#         super(CommentSerializer, self).__init__(*args, **kwargs)
+#         request = self.context.get('request')
+#         if request and request.method == 'POST':
+#             self.Meta.depth = 0
+#         else:
+#             self.Meta.depth = 1
+
+class RecursiveReplySerializer(serializers.ModelSerializer):
+    children = serializers.SerializerMethodField()
+
+    class Meta:
+        model = api_models.Reply
+        fields = ['id', 'user', 'content', 'created_at', 'children']
+
+    def get_children(self, obj):
+        if obj.children.exists():
+            return RecursiveReplySerializer(obj.children.all(), many=True).data
+        return None
+
+class CommentSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    replies = RecursiveReplySerializer(many=True, read_only=True)
+
     class Meta:
         model = api_models.Comment
-        fields = "__all__"
-
-    def __init__(self, *args, **kwargs):
-        super(CommentSerializer, self).__init__(*args, **kwargs)
-        request = self.context.get('request')
-        if request and request.method == 'POST':
-            self.Meta.depth = 0
-        else:
-            self.Meta.depth = 1
-
-
+        fields = ['id', 'user', 'content', 'created_at', 'replies']
 class PostSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True)
     

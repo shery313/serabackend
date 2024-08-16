@@ -17,7 +17,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.tokens import default_token_generator
-
+from rest_framework import serializers
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from datetime import datetime
@@ -37,15 +37,16 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = api_serializer.MyTokenObtainPairSerializer
     def post(self, request, *args, **kwargs):
         # Normalize email before processing login
-        normalized_email = request.data.get('email', '').lower()
-        request.data['email'] = normalized_email
+        normalized_email = request.data.get('email').lower()
+        data=request.data.copy()
+        data['email'] = normalized_email
         return super().post(request, *args, **kwargs)
 
 def get_numeric_otp(length=7):
     otp=''.join([str(random.randint(0,9)) for _ in range(length)])
     return otp
     
-
+from django.db import IntegrityError
 # This code defines another DRF View class called RegisterView, which inherits from generics.CreateAPIView.
 class RegisterView(generics.CreateAPIView):
     # It sets the queryset for this view to retrieve all User objects.
@@ -56,23 +57,27 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = api_serializer.RegisterSerializer
 
     def perform_create(self,serializer):
-        normalizer_email=serializer.validated_data.get('email','').lower()
-        user=serializer.save(email=normalizer_email)
-        user.is_active=False
-        user.otp=generate_numeric_otp()
-        uidb64=user.pk
-        token=default_token_generator.make_token(user)
-        user.reset_token=token
-        user.save()
-        link = f"https://serainnovations.pro/verify-email?uidb64={uidb64}&token={token}&otp={user.otp}"
-        merge_data = {'link': link, 'username': user.username}
-        subject = "Email Verification"
-        text_body = render_to_string("email/verification_email.txt", merge_data)
-        html_body = render_to_string("email/verification_email.html", merge_data)
+        try:
+            normalizer_email=serializer.validated_data.get('email','').lower()
+            user=serializer.save(email=normalizer_email)
+            user.is_active=False
+            user.otp=generate_numeric_otp()
+            uidb64=user.pk
+            token=default_token_generator.make_token(user)
+            user.reset_token=token
+            user.save()
+            link = f"https://serainnovations.pro/verify-email?uidb64={uidb64}&token={token}&otp={user.otp}"
+            merge_data = {'link': link, 'username': user.username}
+            subject = "Email Verification"
+            text_body = render_to_string("email/verification_email.txt", merge_data)
+            html_body = render_to_string("email/verification_email.html", merge_data)
 
-        msg = EmailMultiAlternatives(subject, text_body, settings.EMAIL_HOST, [user.email])
-        msg.attach_alternative(html_body, "text/html")
-        msg.send()
+            msg = EmailMultiAlternatives(subject, text_body, settings.EMAIL_HOST, [user.email])
+            msg.attach_alternative(html_body, "text/html")
+            msg.send()
+        except IntegrityError:
+            raise serializers.ValidationError({'email': 'Email address already exists'})
+
 
 # This code defines another DRF View class called ProfileView, which inherits from generics.RetrieveAPIView and used to show user profile view.
 class VerifyEmail(generics.CreateAPIView):
@@ -534,3 +539,24 @@ class ContactSerializer(generics.CreateAPIView):
             message=message)
         
         return Response(status=status.HTTP_201_CREATED)
+class CommentListCreate(generics.ListCreateAPIView):
+    queryset = api_models.Comment.objects.all()
+    serializer_class = api_serializer.CommentSerializer
+    permission_classes = [AllowAny,]
+
+    def perform_create(self, serializer):
+        user=self.kwargs['user_id']
+        user=api_models.User.objects.get(id=user)
+        serializer.save(user=user, post_id=self.kwargs['post_id'])
+
+class ReplyListCreate(generics.ListCreateAPIView):
+    queryset = api_models.Reply.objects.all()
+    serializer_class = api_serializer.RecursiveReplySerializer
+    permission_classes = [AllowAny,]
+
+    def perform_create(self, serializer):
+        parent_reply = self.request.data.get('parent')
+        if parent_reply:
+            serializer.save(user=self.request.user, parent_id=parent_reply)
+        else:
+            serializer.save(user=self.request.user, comment_id=self.kwargs['comment_id'])

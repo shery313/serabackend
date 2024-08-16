@@ -244,10 +244,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 JAZZMIN_SETTINGS = {
     "site_title": "Sera Innovations",
     "site_header": "Sera Innovations",
-    "site_brand": "Modern Blog ",
+    "site_brand": "Sera Innovations ",
     # "site_icon": "images/favicon.ico",
     # "site_logo": "images/logos/logo.jpg",
-    "welcome_sign": "Welcome To Sheryar",
+    "welcome_sign": "Welcome To Sera Innovations",
     "copyright": "Sheryar",
     "user_avatar": "images/photos/logo.jpg",
     "topmenu_links": [

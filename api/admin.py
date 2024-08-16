@@ -15,8 +15,8 @@ class CategoryAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display = ["title","user","category","view"]
 
-class CommentAdmin(admin.ModelAdmin):
-    list_display = ["post","name","email","comment"]
+# class CommentAdmin(admin.ModelAdmin):
+#     list_display = ["post","name","email","comment"]
 
 class BookmarkAdmin(admin.ModelAdmin):
     list_display = ["user","post"]
@@ -30,7 +30,8 @@ admin.site.register(api_models.User, UserAdmin)
 admin.site.register(api_models.Profile, ProfileAdmin)
 admin.site.register(api_models.Category, CategoryAdmin)
 admin.site.register(api_models.Post, PostAdmin)
-admin.site.register(api_models.Comment, CommentAdmin)
+admin.site.register(api_models.Comment)
 admin.site.register(api_models.Notification, NotificationAdmin)
 admin.site.register(api_models.Bookmark, BookmarkAdmin)
-admin.site.register(api_models.Contact,ContactAdmin )
+admin.site.register(api_models.Contact,ContactAdmin ) 
+admin.site.register(api_models.Reply ) 
