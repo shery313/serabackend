@@ -52,11 +52,11 @@ INSTALLED_APPS = [
 
     # Third Party Apps
     'rest_framework',
-    'rest_framework_simplejwt.token_blacklist',
+    # 'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
     'corsheaders',
-    'anymail',
-    'storages',
+    # 'anymail',
+    # 'storages',
     'django_ckeditor_5',
     "whitenoise.runserver_nostatic",
 ]
@@ -97,26 +97,26 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # db_from_env = dj_database_url.config(conn_max_age=600)
 # DATABASES['default'].update(db_from_env)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'uXldBkqIssAeHSChxbVpOjaWttkxeerS',
-        'HOST': 'junction.proxy.rlwy.net',
-        'PORT': '54172',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'railway',
+#         'USER': 'postgres',
+#         'PASSWORD': 'uXldBkqIssAeHSChxbVpOjaWttkxeerS',
+#         'HOST': 'junction.proxy.rlwy.net',
+#         'PORT': '54172',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -173,7 +173,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'api.User'
 
 # # Site URL
 # SITE_URL=env("SITE_URL")
@@ -198,11 +197,6 @@ AUTH_USER_MODEL = 'api.User'
 # PAYSTACK_PRIVATE_KEY=env("PAYSTACK_PRIVATE_KEY")
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
 
 # ANYMAIL = {
 #     "MAILERSEND_API_TOKEN": "mlsn.",
