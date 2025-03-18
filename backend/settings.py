@@ -36,6 +36,7 @@ CSRF_TRUSTED_ORIGINS = ['https://sera-backend.up.railway.app']
 
 
 # Application definition
+WHITENOISE_MANIFEST_STRICT = False
 
 INSTALLED_APPS = [
     'jazzmin',
