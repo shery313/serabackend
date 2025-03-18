@@ -20,7 +20,7 @@ urlpatterns = [
 #     path('post/comment-post/', api_views.PostCommentAPIView.as_view()),
 #     path('post/bookmark-post/', api_views.BookmarkPostAPIView.as_view()),
 #     path('search/', api_views.PostSearchApiView.as_view()),
-    path('contact',api_views.ContactSerializer.as_view()),
+    path('contact',api_views.ContactListView.as_view()),
 #     path('user/email-verify/',api_views.VerifyEmail.as_view()),
 #     path('posts/<int:post_id>/comments/<user_id>', api_views.CommentListCreate.as_view(), name='comment-list-create'),
 #     path('comments/<int:comment_id>/replies/', api_views.ReplyListCreate.as_view(), name='reply-list-create'),

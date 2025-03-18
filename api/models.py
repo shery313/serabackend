@@ -6,9 +6,10 @@ from django.utils.text import slugify
 
 
 class Contact(models.Model):
-    name=models.CharField(max_length=50,null=True,blank=True)
-    email=models.EmailField(max_length=50,null=True,blank=True)
-    subject=models.CharField(max_length=100,null=True,blank=True)
+    name=models.CharField(max_length=500)
+    email=models.EmailField(max_length=100,null=True,blank=True)
+    subject=models.CharField(max_length=500,null=True,blank=True)
+    s_link=models.TextField(null=True,blank=True)
     message=models.TextField(null=True,blank=True)
     date = models.DateTimeField(auto_now_add=True)
 

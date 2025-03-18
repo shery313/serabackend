@@ -6,7 +6,7 @@ from rest_framework.validators import UniqueValidator
 
 from api import models as api_models
 
-class ContactSerializer(serializers.Serializer):
+class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model=api_models.Contact
         fields='__all__'

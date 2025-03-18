@@ -6,10 +6,11 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Contact
-class ContactSerializer(generics.CreateAPIView):
+
+class ContactListView(generics.ListCreateAPIView):
     serializer_class=api_serializer.ContactSerializer
     queryset=api_models.Contact.objects.all()
-    permission_classes=[AllowAny]
+    # permission_classes=[AllowAny]
     def create(self,request):
         name=request.data.get('name')
         email=request.data.get('email')
