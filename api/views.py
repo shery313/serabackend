@@ -84,8 +84,13 @@ class ContactListView(generics.ListCreateAPIView):
             )
             contact_email.attach_alternative(contact_html, "text/html")
             contact_email.send()
-        
-        return Response(status=status.HTTP_201_CREATED)
+
+        return JsonResponse({
+        "success": True,
+        "status": status.HTTP_201_CREATED,
+        "message": "Contact form submitted successfully"
+    }, status=status.HTTP_201_CREATED)
+        # return Response(status=status.HTTP_201_CREATED)
 
 
 @csrf_exempt
