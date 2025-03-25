@@ -18,6 +18,7 @@ import os
 env = Env()
 env.read_env()
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,7 +32,7 @@ SECRET_KEY = 'django-insecure-we2mbs@atn3srakd0ke!#(jvu(w-y*mg*qck7e0kgr+#qont$3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['sera-backend.up.railway.app','127.0.0.1']
+ALLOWED_HOSTS = ['sera-backend.up.railway.app','127.0.0.1','82.25.105.220']
 CSRF_TRUSTED_ORIGINS = ['https://sera-backend.up.railway.app']
 
 
@@ -39,8 +40,7 @@ CSRF_TRUSTED_ORIGINS = ['https://sera-backend.up.railway.app']
 WHITENOISE_MANIFEST_STRICT = False
 
 INSTALLED_APPS = [
-    'jazzmin',
-    
+    'jazzmin',    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

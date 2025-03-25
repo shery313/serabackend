@@ -6,6 +6,9 @@ from rest_framework import generics
 from rest_framework import status
 from rest_framework.response import Response
 from .models import Contact
+from django.views.decorators.csrf import csrf_exempt
+import json
+from django.http.response import JsonResponse
 
 class ContactListView(generics.ListCreateAPIView):
     serializer_class=api_serializer.ContactSerializer
@@ -26,6 +29,90 @@ class ContactListView(generics.ListCreateAPIView):
         
         return Response(status=status.HTTP_201_CREATED)
 
+
+@csrf_exempt
+def verify_transaction(request):
+    print("function called")
+    if request.method == "POST":
+        data = json.loads(request.body)
+        transaction_id = data.get("transaction_id")
+        order_id = data.get("order_id")  # Get Shopify Order ID
+        print(transaction_id)
+        print(order_id)
+
+        # Get the order total from Shopify
+        shopify_order = get_shopify_order(order_id)
+        if not shopify_order:
+            return JsonResponse({"status": "error", "message": "Invalid order ID"}, status=400)
+
+        expected_amount = shopify_order["total_price"]
+        print("expected ammount",expected_amount)
+        response=update_shopify_order(order_id, "paid")
+        # print(response)
+        return JsonResponse({"status": "success", "message": "Payment verified!"})
+        # Verify transaction with JazzCash
+        # response = requests.post(JAZZCASH_API_URL, json={
+        #     "merchant_id": MERCHANT_ID,
+        #     "transaction_id": transaction_id,
+        #     "secret_key": SECRET_KEY
+        # })
+
+    #     if response.status_code :
+    #         payment_data = response.json()
+    #         actual_amount_paid = payment_data["amount"]
+
+    #         # Check if amount matches
+    #         if actual_amount_paid == expected_amount:
+    #             update_shopify_order(order_id, "paid")  # Mark order as paid
+    #             return JsonResponse({"status": "success", "message": "Payment verified!"})
+    #         else:
+    #             return JsonResponse({"status": "error", "message": "Amount mismatch! Please pay the correct amount."})
+
+    #     return JsonResponse({"status": "error", "message": "Invalid transaction ID"})
+    # else:
+    #     return JsonResponse({"status":"error","message":"Method not Allowed"})
+
+def get_shopify_order(order_id):
+    """Fetch order details from Shopify API"""
+    SHOPIFY_API_URL = f"https://wrc3eb-hu.myshopify.com/admin/api/2025-01/orders/{order_id}.json"
+    headers = {"X-Shopify-Access-Token": "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"}
+    print("shopify get function called")
+    response = requests.get(SHOPIFY_API_URL, headers=headers)
+    print(response)
+
+    if response.status_code == 200:
+        print(response)
+        return response.json()["order"]
+    return None
+@csrf_exempt
+def update_shopify_order(order_id, status):
+    """Update order status in Shopify"""
+    SHOPIFY_API_URL = f"https://wrc3eb-hu.myshopify.com/admin/api/2025-01/orders/{order_id}.json"
+    headers = {
+        "X-Shopify-Access-Token": "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",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "order": {
+            "id": order_id,
+            "payment_status": status  # e.g., "paid", "pending"
+        }
+    }
+
+    try:
+        response = requests.put(SHOPIFY_API_URL, headers=headers, json=data)
+        response_data = response.json()
+
+        if response.status_code == 200:
+            print(f"✅ Order {order_id} updated successfully!")
+            return response_data
+        else:
+            print(f"❌ Failed to update order {order_id}. Error: {response_data}")
+            return None
+
+    except requests.exceptions.RequestException as e:
+        print(f"❌ API request failed: {e}")
+        return None
 
 # from django.shortcuts import render
 # from django.http import JsonResponse

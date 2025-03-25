@@ -15,3 +15,12 @@ class Contact(models.Model):
 
     def __str__(self):
         return f'{self.subject} from {self.name}'
+class TransactionRecord(models.Model):
+    transaction_id=models.CharField(max_length=500)
+    order_id=models.CharField(max_length=500)
+    payment_method=models.CharField(max_length=500,null=True,blank=True)
+    date=models.DateTimeField(auto_now_add=True)
+    is_verfied=models.BooleanField(default=False)
+
+    def __str__ (self):
+        return f'{self.transaction_id} of {self.order_id}'

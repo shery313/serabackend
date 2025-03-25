@@ -34,4 +34,4 @@ class ContactAdmin(admin.ModelAdmin):
 # admin.site.register(api_models.Notification, NotificationAdmin)
 # admin.site.register(api_models.Bookmark, BookmarkAdmin)
 admin.site.register(api_models.Contact,ContactAdmin ) 
-# admin.site.register(api_models.Reply ) 
+admin.site.register(api_models.TransactionRecord ) 

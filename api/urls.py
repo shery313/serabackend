@@ -1,6 +1,7 @@
 from django.urls import path
 # from rest_framework_simplejwt.views import TokenRefreshView
 from api import views as api_views
+from .views import verify_transaction
 
 urlpatterns = [
 #     # Userauths API Endpoints
@@ -21,6 +22,8 @@ urlpatterns = [
 #     path('post/bookmark-post/', api_views.BookmarkPostAPIView.as_view()),
 #     path('search/', api_views.PostSearchApiView.as_view()),
     path('contact',api_views.ContactListView.as_view()),
+     path('api/verify/transactions', verify_transaction, name='verify-transactions'),
+
 #     path('user/email-verify/',api_views.VerifyEmail.as_view()),
 #     path('posts/<int:post_id>/comments/<user_id>', api_views.CommentListCreate.as_view(), name='comment-list-create'),
 #     path('comments/<int:comment_id>/replies/', api_views.ReplyListCreate.as_view(), name='reply-list-create'),
