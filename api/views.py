@@ -69,11 +69,13 @@ class ContactListView(generics.ListCreateAPIView):
             contact_text = render_to_string('email/contact_confirmation.txt', {
                 'name': name,
                 'subject': subject,
+                'email':email
             })
             
             contact_html = render_to_string('email/contact_confirmation.html', {
                 'name': name,
                 'subject': subject,
+                'email': email,
             })
             
             contact_email = EmailMultiAlternatives(
