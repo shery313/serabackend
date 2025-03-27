@@ -13,7 +13,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.conf import settings
 
-class ContactListView(generics.ListCreateAPIView):
+class ContactListView(generics.CreateAPIView):
     serializer_class = api_serializer.ContactSerializer
     queryset = api_models.Contact.objects.all()
     
