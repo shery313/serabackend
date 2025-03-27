@@ -100,10 +100,20 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('PGDATABASE'),
+        'USER': os.environ.get('PGUSER'),
+        'PASSWORD': os.environ.get('PGPASSWORD'),
+        'HOST': os.environ.get('PGHOST'),
+        'PORT': os.environ.get('PGPORT'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # db_from_env = dj_database_url.config(conn_max_age=600)
@@ -113,9 +123,9 @@ DATABASES = {
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'railway',
 #         'USER': 'postgres',
-#         'PASSWORD': 'uXldBkqIssAeHSChxbVpOjaWttkxeerS',
-#         'HOST': 'junction.proxy.rlwy.net',
-#         'PORT': '54172',
+#         'PASSWORD': 'vOiHBSGFFcpplfuvYBhSpYtdqFzhuxMZ',
+#         'HOST': 'postgres.railway.internal',
+#         'PORT': '5432',
 #     }
 # }
 
@@ -202,7 +212,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ANYMAIL = {
 #     "MAILERSEND_API_TOKEN": "mlsn.",
 # }
-
+# .
 
 
 # FROM_EMAIL=env("FROM_EMAIL")
@@ -337,9 +347,10 @@ JAZZMIN_UI_TWEAKS = {
 }
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # SMTP server address
-EMAIL_PORT = 587  # Port for SMTP (587 for TLS, 465 for SSL)
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')  # SMTP server address
+EMAIL_PORT = os.environ.get('EMAIL_PORT')  # Port for SMTP (587 for TLS, 465 for SSL)
 EMAIL_USE_TLS = True  # Use TLS (True for most servers)
-EMAIL_HOST_USER = 'khushakbatain@gmail.com'
-EMAIL_HOST_PASSWORD = 'dxex npru ejxb otlo'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
+print(EMAIL_BACKEND)
