@@ -352,3 +352,12 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')  # Port for SMTP (587 for TLS, 465 for
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')  # Use TLS (True for most servers)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
+# SWAGGER_SETTINGS = {
+#     'SECURITY_DEFINITIONS': {
+#         'Basic': {
+#             'type': 'basic'
+#         }
+#     },
+#     'LOGIN_URL': 'rest_framework:login',
+#     'LOGOUT_URL': 'rest_framework:logout',
+# }
