@@ -2,12 +2,108 @@
 <html>
 <head>
     <title>New Contact Form Submission</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #f8f9fa; padding: 10px; text-align: center; }
-        .content { padding: 20px; }
-        .footer { margin-top: 20px; font-size: 0.9em; color: #6c757d; }
+        /* Base Styles */
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            padding: 25px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Content */
+        .content {
+            padding: 30px;
+        }
+        
+        .detail-row {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #4b5563;
+            display: inline-block;
+            width: 80px;
+        }
+        
+        .message-content {
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            border-left: 3px solid #2563eb;
+            white-space: pre-wrap;
+        }
+        
+        .link-highlight {
+            color: #2563eb;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+        }
+        
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .detail-label {
+                display: block;
+                width: auto;
+                margin-bottom: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -15,16 +111,42 @@
         <div class="header">
             <h2>New Contact Form Submission</h2>
         </div>
+        
         <div class="content">
-            <p><strong>Name:</strong> {{ name }}</p>
-            <p><strong>Email:</strong> {{ email }}</p>
-            <p><strong>Subject:</strong> {{ subject }}</p>
-            {% if s_link %}<p><strong>Link:</strong> {{ s_link }}</p>{% endif %}
-            <p><strong>Message:</strong></p>
-            <p>{{ message }}</p>
+            <div class="detail-row">
+                <span class="detail-label">Name:</span>
+                <span>{{ name }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Email:</span>
+                <span><a href="mailto:{{ email }}" style="color: #2563eb; text-decoration: none;">{{ email }}</a></span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Subject:</span>
+                <span>{{ subject }}</span>
+            </div>
+            
+            {% if s_link %}
+            <div class="detail-row">
+                <span class="detail-label">Link:</span>
+                <span><a href="{{ s_link }}" class="link-highlight" target="_blank">{{ s_link }}</a></span>
+            </div>
+            {% endif %}
+            
+            <div class="detail-row">
+                <span class="detail-label">Message:</span>
+                <div class="message-content">{{ message }}</div>
+            </div>
         </div>
+        
         <div class="footer">
-            <p>This message was sent from your website's contact form.</p>
+            <p>This message was sent from your website's contact form at {{ timestamp }}.</p>
+            <p style="margin-top: 5px; font-size: 12px;">
+                <a href="https://web-production-fb93.up.railway.app/admin/api/contact/" style="color: #2563eb; text-decoration: none;">View in Dashboard</a> | 
+                <a href="mailto:{{ email }}?subject=Re: {{ subject | urlencode }}" style="color: #2563eb; text-decoration: none;">Reply Directly</a>
+            </p>
         </div>
     </div>
 </body>

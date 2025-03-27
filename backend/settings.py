@@ -276,10 +276,8 @@ JAZZMIN_SETTINGS = {
     "order_with_respect_to": [
         "api",
         "api.Post",
-        "api.Category",
-        "api.Comment",
-        "api.Bookmark",
-        "api.Notification",
+        "api.Contact",
+        "api.TransactionRecord",
     ],
     "icons": {
         "admin.LogEntry": "fas fa-file",
@@ -288,13 +286,14 @@ JAZZMIN_SETTINGS = {
         "auth.user": "fas fa-user",
 
         "api.User": "fas fa-user",
-        "api.Profile":"fas fa-address-card",
-        "api.Post":"fas fa-th",
-        "api.Category":"fas fa-tag",
-        "api.Comment":"fas fa-envelope",
-        "api.Notification":"fas fa-bell",
-        "api.Bookmark":"fas fa-heart",
-        "api.Contact":"fas fa-phone"
+        # "api.Profile":"fas fa-address-card",
+        # "api.Post":"fas fa-th",
+        # "api.Category":"fas fa-tag",
+        # "api.Comment":"fas fa-envelope",
+        # "api.Notification":"fas fa-bell",
+        # "api.Bookmark":"fas fa-heart",
+        "api.Contact":"fas fa-phone",
+        "api.TransactionRecord":"fas fa-wallet"
 
         
     },

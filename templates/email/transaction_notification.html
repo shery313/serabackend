@@ -1,27 +1,191 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>New Transaction Verified</title>
+    <title>New Transaction Requires Verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #f8f9fa; padding: 10px; text-align: center; }
-        .content { padding: 20px; }
-        .footer { margin-top: 20px; font-size: 0.9em; color: #6c757d; }
+        /* Base Styles */
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Pending Verification Header */
+        .header {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .verification-status {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        
+        /* Content */
+        .content {
+            padding: 30px;
+        }
+        
+        .transaction-details {
+            background-color: #FFF7ED;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #F59E0B;
+        }
+        
+        .detail-row {
+            margin-bottom: 12px;
+            display: flex;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #4B5563;
+            width: 140px;
+            flex-shrink: 0;
+        }
+        
+        .detail-value {
+            color: #111827;
+            word-break: break-word;
+        }
+        
+        .verification-message {
+            font-size: 16px;
+            margin-bottom: 25px;
+            color: #374151;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .verify-button {
+            display: inline-block;
+            background-color: #10B981;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .reject-button {
+            display: inline-block;
+            background-color: #EF4444;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .review-button {
+            display: inline-block;
+            background-color: #3B82F6;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #6B7280;
+            border-top: 1px solid #E5E7EB;
+            background-color: #F9FAFB;
+        }
+        
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+            }
+            
+            .detail-label {
+                width: auto;
+                margin-bottom: 5px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h2>New Transaction Verified</h2>
+            <h2>New Transaction Requires Verification</h2>
+            <div class="verification-status">⚠️ Pending Verification</div>
         </div>
+        
         <div class="content">
-            <p>A new transaction has been successfully verified:</p>
-            <p><strong>Transaction ID:</strong> {{ transaction_id }}</p>
-            <p><strong>Order ID:</strong> {{ order_id }}</p>
+            <p class="verification-message">A new transaction has been submitted and requires your verification before processing.</p>
+            
+            <div class="transaction-details">
+                <div class="detail-row">
+                    <span class="detail-label">Transaction ID:</span>
+                    <span class="detail-value">{{ transaction_id }}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Order ID:</span>
+                    <span class="detail-value">{{ order_id }}</span>
+                </div>
+                
+                
+            </div>
+            
+            
         </div>
+        
         <div class="footer">
-            <p>This is an automated notification from your payment system.</p>
+            <p>This is an automated notification from your transaction verification system.</p>
+            
         </div>
     </div>
 </body>

@@ -2,12 +2,97 @@
 <html>
 <head>
     <title>Thank You for Contacting Us</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { font-family: Arial, sans-serif; line-height: 1.6; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background-color: #f8f9fa; padding: 10px; text-align: center; }
-        .content { padding: 20px; }
-        .footer { margin-top: 20px; font-size: 0.9em; color: #6c757d; }
+        /* Base Styles */
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333333;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        /* Content */
+        .content {
+            padding: 30px;
+        }
+        
+        .content p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .highlight {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-left: 4px solid #4f46e5;
+            border-radius: 0 4px 4px 0;
+            margin: 25px 0;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #6b7280;
+            border-top: 1px solid #e5e7eb;
+            background-color: #f9fafb;
+        }
+        
+        .company-name {
+            font-weight: 600;
+            color: #4f46e5;
+        }
+        
+        /* Button */
+        .button {
+            display: inline-block;
+            background-color: #4f46e5;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            margin: 15px 0;
+        }
+        
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -15,13 +100,37 @@
         <div class="header">
             <h2>Thank You for Contacting Us</h2>
         </div>
+        
         <div class="content">
             <p>Dear {{ name }},</p>
-            <p>Thank you for contacting us regarding "{{ subject }}". We have received your message and will get back to you soon.</p>
-            <p>We appreciate your interest and will respond as quickly as possible.</p>
+            
+            <p>Thank you for reaching out to us regarding <strong>"{{ subject }}"</strong>. We've received your message and our team will review it shortly.</p>
+            
+            <div class="highlight">
+                <p>Here's what happens next:</p>
+                <ul>
+                    <li>Your request has been logged (Ref: #{{ ticket_number }})</li>
+                    <li>Our team will respond within 24-48 hours</li>
+                    <li>We'll contact you at {{ email }}</li>
+                </ul>
+            </div>
+            
+            <p>In the meantime, you might find answers in our <a href="https://yourwebsite.com/faq" style="color: #4f46e5;">FAQ section</a> or browse our resources.</p>
+            
+            <p>We truly appreciate you choosing <span class="company-name">Your Company</span> and look forward to assisting you.</p>
         </div>
+        
         <div class="footer">
-            <p>Best regards,<br>Your Company Team</p>
+            <p>Best regards,<br><strong>The Team at <span class="company-name">Sera Innovations</span></strong></p>
+            <p style="margin-top: 10px;">
+                <a href="https://serainnovations.com" style="color: #4f46e5; text-decoration: none;">Website</a> | 
+                <a href="https://twitter.com/yourcompany" style="color: #4f46e5; text-decoration: none;">Twitter</a> | 
+                <a href="https://linkedin.com/company/yourcompany" style="color: #4f46e5; text-decoration: none;">LinkedIn</a>
+            </p>
+            <p style="font-size: 12px; color: #9ca3af; margin-top: 15px;">
+                © 2023 Your Company. All rights reserved.<br>
+                If you didn't initiate this request, please <a href="mailto:support@yourcompany.com" style="color: #4f46e5;">contact us</a>.
+            </p>
         </div>
     </div>
 </body>
