@@ -350,7 +350,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
 EMAIL_HOST = os.environ.get('EMAIL_HOST')  # SMTP server address
 EMAIL_PORT = os.environ.get('EMAIL_PORT')  # Port for SMTP (587 for TLS, 465 for SSL)
-EMAIL_USE_TLS = True  # Use TLS (True for most servers)
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')  # Use TLS (True for most servers)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') 
-print(EMAIL_BACKEND)
