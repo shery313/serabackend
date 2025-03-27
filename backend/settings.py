@@ -34,6 +34,12 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['web-production-fb93.up.railway.app','127.0.0.1','82.25.105.220','serainnovations.pro']
 CSRF_TRUSTED_ORIGINS = ['https://web-production-fb93.up.railway.app','https://serainnovations.pro']
+# ALLOWED_HOSTS = ["vivify-backend-2e2a6dca838b.herokuapp.com", "127.0.0.1"]
+# CSRF_TRUSTED_ORIGINS = ['https://vivify-backend-2e2a6dca838b.herokuapp.com', 'https://127.0.0.1','https://theglowingandrevival.store']
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'https://theglowingandrevival.store','https://admin.shopify.com','https://serainnovations.com',
+]
 
 
 # Application definition
@@ -254,7 +260,7 @@ SIMPLE_JWT = {
 
 
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Custom Admin Settings
