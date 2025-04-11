@@ -33,7 +33,7 @@ class ContactListView(generics.CreateAPIView):
         )
         
         # Send HTML email to owner
-        owner_email = "Sheryarsatti6@gmail.com"
+        owner_email = "info@serainnovations.com"
         owner_subject = f"New Contact Form Submission: {subject}"
         
         # Render both text and HTML versions
